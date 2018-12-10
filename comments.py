@@ -1,20 +1,21 @@
-﻿import queryhelp
-
-def add_comments(comments, postObj):
-# Adds comments to a existing post shared with a friend group. Takes in postObj
-# dictionary object representing the post, the comment(s) to be added (each 
-# comment is a tuple of the user and comment string) in chronological order.
-# Example: comment[0] is the tuple (Jennifer, "That looks so delicious!")
+﻿@app.route('/addComment', methods=['GET','POST'])
+def addComment():
+    userEmail = session.get('user')
+    selectedContent = request.form.get('select_content')
+    commentToBeAdded = request.form.get('comment')
+    cursor = conn.cursor()
     
-    comments_list = list(comments)
-    for item in comments_list:
-        commentToBeAdded = {'Username': item[0], 'Comment': item[1]}
-        postObj["comments"].append(commentToBeAdded)
-        
-        # Retrieves ID of post to which comments are to be added
-        post_id = postObj["item_id"]
-        
+    # Check that content item is visible to user
+    queryFindOwner = "SELECT item_id, is_pub FROM ContentItem WHERE item_name = %s"
+    cursor.execute(queryFindOwner, (selectedContent))
+    isPublic = cursor.fetchone().get('is_pub')
+    conID = cursor.fetchone().get('item_id')
+    
+    queryFriendGroups = "SELECT * FROM Belong NATURAL JOIN Share WHERE member_email = %s AND item_id = %s"
+    cursor.execute(queryFriendGroups, (userEmail, conID))
+    groupExists = cursor.fetchall()
+    
+    if isPublic or groupExists:
         # Inserts comment information into comments table of database
-        query = "INSERT INTO comments(post_id, username, comment) VALUES (post_id, item[0], item[1]);"
-        
-        queryhelp.make_query(query, "i")
+        queryAddComment = "INSERT INTO Comments(email, content_item, comment) VALUES (%s, %s, %s)"
+        cursor.execute(queryAddComment, (userEmail, selectedContent, commentToBeAdded))
