@@ -90,7 +90,7 @@ CREATE TABLE Comments(
     comment VARCHAR(20),
     PRIMARY KEY(email, content_item),
     FOREIGN KEY(email) REFERENCES Person(email),
-    FOREIGN KEY(content_item) REFERENCES ContentItem(item_id)
+    FOREIGN KEY(item_id) REFERENCES ContentItem(item_id)
 );
 
 
