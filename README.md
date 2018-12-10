@@ -1,5 +1,7 @@
 # PriCoShaDB
 To Run:
+- pip3 install flask
+- pip3 install pymysql
 - import table definitions into mySQL phpAdmin
 - python3 app.py in project root directory
 
