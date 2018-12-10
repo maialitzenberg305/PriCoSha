@@ -20,5 +20,5 @@ def addComment():
     
     if isPublic or groupExists:
         # Inserts comment information into comments table of database
-        queryAddComment = "INSERT INTO Comments(email, content_item, comment) VALUES (%s, %s, %s)"
-        cursor.execute(queryAddComment, (userEmail, selectedContent, commentToBeAdded))
+        queryAddComment = "INSERT INTO Comments(email, item_id, comment) VALUES (%s, %s, %s)"
+        cursor.execute(queryAddComment, (userEmail, conID, commentToBeAdded))
