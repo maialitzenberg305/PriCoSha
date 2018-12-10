@@ -1,4 +1,7 @@
-﻿@app.route('/addComment', methods=['GET','POST'])
+from flask import Flask, request, render_template, json, session, redirect
+from header import app
+
+@app.route('/addComment', methods=['GET','POST'])
 def addComment():
     userEmail = session.get('user')
     selectedContent = request.form.get('select_content')
