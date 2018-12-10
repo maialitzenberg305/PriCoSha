@@ -88,7 +88,7 @@ CREATE TABLE Comments(
     email VARCHAR(20),
     item_id int,
     comment VARCHAR(20),
-    PRIMARY KEY(email, content_item),
+    PRIMARY KEY(email, item_id),
     FOREIGN KEY(email) REFERENCES Person(email),
     FOREIGN KEY(item_id) REFERENCES ContentItem(item_id)
 );
