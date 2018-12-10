@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, json, session, redirect
 from header import app
 
 @app.route('/addComment', methods=['GET','POST'])
-def add_comment():
+def add_comments():
     userEmail = session.get('user')
     selectedContent = request.form.get('select_content')
     commentToBeAdded = request.form.get('comment')
