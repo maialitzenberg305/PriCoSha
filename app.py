@@ -8,6 +8,7 @@ import bestFriendMod
 import tags
 import poke
 import familyMod
+import comments
 
 import pymysql.cursors
 
